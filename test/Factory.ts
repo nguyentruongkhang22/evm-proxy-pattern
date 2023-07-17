@@ -25,17 +25,15 @@ describe("Lock", function () {
   describe("Create new implementation", function () {
     it("Should create new implementation", async function () {
       const { factory, admin, user } = await loadFixture(fixture);
-      // await factory.setImplement(Buffer.from("count1"), await count.getAddress());
+      await factory.createNewProxy();
+      const count = await ethers.getContractAt("Count", await factory.getProxyAddress(0));
 
-      await factory.createNewProxy("0x06b3dfaec148fb1bb2b066f10ec285e7c9bf402ab32aa78a5d38e34566810cd2");
-      const proxyAddress = await factory.getProxyAddress(1, "0x06b3dfaec148fb1bb2b066f10ec285e7c9bf402ab32aa78a5d38e34566810cd2");
-      console.log("📢[Factory.ts:29]: proxyAddress: ", proxyAddress);
+      const currentCount = await count.currentCount();
+      console.log(" -- currentCount: ", currentCount);
 
-      const Count: Count__factory = await ethers.getContractFactory("Count");
-
-      const hehe: CountInterface = Count.attach(proxyAddress);
-      const hehe = await proxy.currentCount();
-      console.log("📢[Factory.ts:36]: hehe: ", hehe);
+      await count.increment();
+      const newCount = await count.currentCount();
+      console.log(" -- newCount: ", newCount);
     });
   });
 });

@@ -3,7 +3,7 @@ pragma solidity ^0.8.9;
 import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 import "./interfaces/ICount.sol";
 
-contract Count is Initializable, ICount, OwnableUpgradeable {
+contract NewCount is Initializable, ICount, OwnableUpgradeable {
   uint256 private _count;
 
   constructor() {
